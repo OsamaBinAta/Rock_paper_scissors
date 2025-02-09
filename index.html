@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <title>Rock Paper Scissors</title>
+  <style>
+    body{
+      margin-left:50px;
+    }
+    .heading {
+      font-family: Lilita One;
+      font-size: 55px;
+      margin-bottom: 30px;
+      margin-left:-35px;
+    }
+
+    .vs {
+      font-family: Lilita One;
+      font-size: 55px;
+    }
+
+    .you,
+    .computer {
+      height: 180px;
+      width: 180px;
+
+      object-fit: cover;
+      border: none;
+      border:4px solid black;
+      border-radius: 10px;
+    }
+
+    .row_2 {
+      display: flex;
+      align-items: center;
+      gap: 100px;
+    }
+
+    .row_3 {
+      display: flex;
+      height: 20px;
+      width: 535px;
+      margin-left: 60px;
+      margin-top: 2px;
+      margin-bottom: 20px;
+    }
+
+    .row_3,
+    q {
+      font-family: Lilita One;
+      font-size: 25px;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .row_4 {
+      display: flex;
+      gap: 35px;
+      align-items: center;
+    }
+
+    .move {
+      font-family: Lilita One;
+      font-size: 35px;
+    }
+
+    button {
+      position: relative;
+      height: 70px;
+      width: 70px;
+      background: none;
+      border: none;
+      border: 2px solid black;
+      border-radius:3px;
+      cursor:pointer;
+      transition: transform 0.2s ease;
+    }
+    button:hover {
+      transform: translate(5px, 5px); /* Shift button by 5px right and 5px down */
+    }
+
+    .move_img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+
+    }
+
+    .end {
+      display: flex;
+      width: 650px;
+    }
+
+    .scor {
+      font-family: Lilita One;
+      font-size: 30px;
+      
+      
+    }
+  </style>
+</head>
+
+
+
+<body>
+  <div>
+    <div>
+      <p class="heading">ROCK PAPER SCISSORS GAME</p>
+    </div>
+    <div class="row_2">
+      <img class="you" src="yellow.png" alt="">
+      <p class="vs">vs</p>
+      <img class="computer" src="yellow.png" alt="">
+    </div>
+    <div class="row_3">
+      <p>YOU</p>
+      <p>COMPUTER</p>
+    </div>
+    <div class="row_4">
+      <p class="move">Choose Your Move :</p>
+      <button onclick="
+              myMove='rock';
+              document.querySelector('.you').src = 'Rock.png';
+              callComputer();
+              compareMove(myMove);
+      " class="rock_bt"> <img class="move_img" src="Rock.png" alt=""></button>
+      <button onclick="
+               myMove='scissors';
+               document.querySelector('.you').src = 'Scissors.png';
+              callComputer();
+              compareMove(myMove);
+          " class="sciss_bt"> <img class="move_img" src="Scissors.png" alt=""></button>
+      <button onclick="
+              myMove='paper';
+              document.querySelector('.you').src = 'paper.png';
+              callComputer();
+              compareMove(myMove);
+          " class="paper_bt"> <img class="move_img" src="paper.png" alt=""></button>
+    </div>
+    <div class="end">
+      <p class="scor"></p>
+    </div>
+  </div>
+
+
+
+  <script>
+    let myMove;
+    let computerMove;
+    let score = {
+      wins: 0,
+      losses: 0,
+      ties: 0
+    }
+
+    function callComputer() {
+      if (Math.random() >= 0 && Math.random() < 1 / 3) {
+        computerMove = 'rock';
+        document.querySelector('.computer').src = 'Rock.png';
+      }
+      else if (Math.random() >= 1 / 3 && Math.random() < 2 / 3) {
+        computerMove = 'paper';
+        document.querySelector('.computer').src = 'paper.png';
+      }
+      else {
+        computerMove = 'scissors';
+        document.querySelector('.computer').src = 'Scissors.png';
+      }
+    }
+
+    function compareMove(myMove) {
+
+      if (myMove == computerMove) {
+        score.ties += 1;
+        document.querySelector('.scor').innerHTML = 'You picked ' + myMove + ' . Computer picked ' + computerMove + '. Tie.' + '<br>Wins: ' + score.wins + ', Losses: ' + score.losses + ', Ties: ' + score.ties;
+      }
+      else if (myMove == 'rock' && computerMove == 'scissors') {
+        score.wins += 1;
+        document.querySelector('.scor').innerHTML = 'You picked rock. Computer picked scissors. You win.' + '<br>Wins: ' + score.wins + ', Losses: ' + score.losses + ', Ties: ' + score.ties;
+      }
+      else if (myMove == 'rock' && computerMove == 'paper') {
+        score.losses += 1;
+        document.querySelector('.scor').innerHTML = 'You picked rock. Computer picked paper. You lose.' + '<br>Wins: ' + score.wins + ', Losses: ' + score.losses + ', Ties: ' + score.ties;
+      }
+      else if (myMove == 'paper' && computerMove == 'rock') {
+        score.wins += 1;
+        document.querySelector('.scor').innerHTML = 'You picked paper. Computer picked rock. You win.' + '<br>Wins: ' + score.wins + ', Losses: ' + score.losses + ', Ties: ' + score.ties;
+      }
+      else if (myMove == 'paper' && computerMove == 'scissors') {
+        score.losses += 1;
+        document.querySelector('.scor').innerHTML = 'You picked paper. Computer picked scissors. You lose.' + '<br>Wins: ' + score.wins + ', Losses: ' + score.losses + ', Ties: ' + score.ties;
+      }
+      else if (myMove == 'scissors' && computerMove == 'rock') {
+        score.losses += 1;
+        document.querySelector('.scor').innerHTML = 'You picked scissors. Computer picked rock. You lose.' + '<br>Wins: ' + score.wins + ', Losses: ' + score.losses + ', Ties: ' + score.ties;
+      }
+      else if (myMove == 'scissors' && computerMove == 'paper') {
+        score.wins += 1;
+        document.querySelector('.scor').innerHTML = 'You picked scissors. Computer picked paper. You win.' + '<br>Wins: ' + score.wins + ', Losses: ' + score.losses + ', Ties: ' + score.ties;
+      }
+    }
+  </script>
+</body>
+
+</html>
